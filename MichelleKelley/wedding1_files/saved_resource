@@ -1,0 +1,104 @@
+//<script>
+    (function(global) {
+        "use strict";
+
+        global.ITGS = global.ITGS || {loadedMedias:{}};
+
+        var options = {"siteId":10276,"publisherId":10745,"domainName":"widgets.kiosked.com","resDomainName":"http:\/\/resources.kiosked.com","loader":"http:\/\/resources.kiosked.com\/scripts\/mediakiosk816.js","loaderWithDiag":"http:\/\/resources.kiosked.com\/scripts\/mediakioskDiag816.js","scriptUrl":"\/\/widgets.kiosked.com\/ssp\/placement-identifier\/?pub=10745\u0026site=10276\u0026env=production\u0026ref=http%3A%2F%2Fwww.splitshire.com%2F%3Fs%3Dwedding%2Bphotos","environment":"production","ipAddress":"74.136.114.45","endPoint":"widgets.kiosked.com\/ssp\/zone-data","maxKioskedImages":0,"countryCode":"US","sampleRate":0.1,"settingsData":{"settings":[{"key":"ui.sniff.disableKiosksInElements","value":"#most_popular","target":null,"targetDeviceFamily":"0","lastUpdate":"1426537377","meta":{"origin":"override"}},{"key":"ui.media.overridePlugins","value":"BannerSlot","target":null,"targetDeviceFamily":"0","lastUpdate":"1440189245","meta":{"origin":"override"}},{"key":"ui.media.overridePlugins","value":"VastPreroll","target":".sstk_widget","targetDeviceFamily":"0","lastUpdate":"1441033299","meta":{"origin":"override"}},{"key":"ui.media.Banner.horizontalZoneId","value":"3831184","target":null,"targetDeviceFamily":"0","lastUpdate":"1440189112","meta":{"origin":"override"}},{"key":"ui.media.Banner.minMediaSize.horizontalWidth","value":"300","target":null,"targetDeviceFamily":"0","lastUpdate":"1428512466","meta":{"origin":"override"}},{"key":"ui.media.Banner.maxMediaSize.horizontalWidth","value":"1200","target":null,"targetDeviceFamily":"0","lastUpdate":"1428474850","meta":{"origin":"override"}},{"key":"ui.media.Banner.maxMediaSize.verticalHeight","value":"1200","target":null,"targetDeviceFamily":"0","lastUpdate":"1428473720","meta":{"origin":"override"}},{"key":"ui.media.Banner.provider","value":"appnexus","target":null,"targetDeviceFamily":"0","lastUpdate":"1440189100","meta":{"origin":"override"}},{"key":"ui.media.Banner.provider","value":"VastPreroll","target":".sstk_widget","targetDeviceFamily":"0","lastUpdate":"1441033299","meta":{"origin":"override"}},{"key":"ui.media.Banner.bannerReloading.offScreen.hide","value":"true","target":null,"targetDeviceFamily":"0","lastUpdate":"1424463447","meta":{"origin":"override"}},{"key":"ui.media.Banner.bannerReloading.onScreen.hide","value":"60","target":null,"targetDeviceFamily":"0","lastUpdate":"1428943771","meta":{"origin":"override"}},{"key":"ui.media.Banner.bannerReloading.offScreen.reappearanceMode","value":"refresh","target":null,"targetDeviceFamily":"0","lastUpdate":"1424463451","meta":{"origin":"override"}},{"key":"ui.media.Banner.bannerReloading.onScreen.reappearanceMode","value":"refresh","target":null,"targetDeviceFamily":"0","lastUpdate":"1424463448","meta":{"origin":"override"}},{"key":"ui.media.Banner.mobileZoneId","value":"5050399","target":null,"targetDeviceFamily":"2","lastUpdate":"1435097873","meta":{"origin":"override"}},{"key":"ui.sniff.quantcastEnabled","value":"false","target":".sstk_widget","targetDeviceFamily":"0","lastUpdate":"1441033299","meta":{"origin":"override"}},{"key":"ui.media.Banner.videoZoneVastUrl","value":"http:\/\/ads.adaptv.advertising.com\/a\/h\/4ZRhKWeWKBsjH8IP7ZJ2OmLtu0nuPDpV?cb=[CACHE_BREAKER]\u0026pet=preroll\u0026pageUrl=EMBEDDING_PAGE_URL\u0026eov=eov","target":".sstk_widget","targetDeviceFamily":"0","lastUpdate":"1442259467","meta":{"origin":"override"}},{"key":"ui.media.maxPlugins.VastPreroll","value":"1","target":".sstk_widget","targetDeviceFamily":"0","lastUpdate":"1441033299","meta":{"origin":"override"}},{"key":"ui.sniff.selectionMode","value":"select","target":".sstk_widget","targetDeviceFamily":"0","lastUpdate":"1441033299","meta":{"origin":"override"}},{"key":"ui.media.cutSizeFromParents","value":"auto","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.media.zIndex","value":"auto","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.sniff.minMediaHeight","value":"200","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.sniff.minMediaWidth","value":"290","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.media.overlays.Disclaimer.containerWidth","value":"264","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.media.overlays.Disclaimer.disclaimerText","value":"Advertisement","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.media.Banner.showDisclaimer","value":"true","target":null,"targetDeviceFamily":"0","lastUpdate":"0","meta":{"origin":"default"}},{"key":"ui.sniff.disableIndexPageAnalysis","value":"true","target":null,"targetDeviceFamily":"0","lastUpdate":"1409222197","meta":{"origin":"default"}},{"key":"ui.media.overlays.Disclaimer.disclaimerLink","value":"http:\/\/page.kiosked.com\/who-served-this-ad","target":null,"targetDeviceFamily":"0","lastUpdate":"1412848290","meta":{"origin":"default"}},{"key":"ui.sniff.quantcastEnabled","value":"true","target":null,"targetDeviceFamily":"0","lastUpdate":"1423226192","meta":{"origin":"default"}},{"key":"ui.sniff.sendZoneDataRequests","value":"false","target":null,"targetDeviceFamily":"0","lastUpdate":"1423827257","meta":{"origin":"default"}},{"key":"ui.media.Banner.waterfallAnalyticsEnabled","value":"true","target":null,"targetDeviceFamily":"0","lastUpdate":"1441089555","meta":{"origin":"default"}}],"meta":{"appliedAbTest":null,"appliedAbTestStatus":0}},"trackingUser":{"c":"39db21698ca6e6a35bf37ee9ea2794ae7146e07e","a":{"f":"","d":"","g":""},"l":""}};
+        if (!options || (typeof options !== "object")) {
+            throw new Error("Options is empty or null - cannot load!");
+        }
+        options.cachedZoneResponse = [];
+        var scriptLoadInterval = null;
+
+        function initialise() {
+            var namespace = global.ITGS;
+            if (namespace.mediaJsLoading === "done") {
+                clearInterval(scriptLoadInterval);
+                var libLoadTime = namespace.tools.environment.getCurrentTimestamp();
+                namespace.messaging.prepareTimingController().then(function(timingController) {
+                    if (typeof ITGS.startLibraryTime === "number"){
+                        timingController.registerEvent("startStaticLib",{},ITGS.startLibraryTime);
+                    }
+                    timingController.registerEvent("libLoad",{},libLoadTime);
+                });
+                namespace.tools.environment.setContext(options.environment);
+                namespace.tools.environment.setDomainName(options.domainName);
+                namespace.tools.environment.setIPAddress(options.ipAddress);
+                namespace.tools.environment.setPublisherID(options.publisherId);
+
+                var deviceFilter = new namespace.SettingsDeviceFilter(options.settingsData.settings);
+                options.settingsData.settings = deviceFilter.getMergedSettingsForCurrentDevice();
+
+                overrideFunctions();
+                namespace.messaging.libraryInit();
+
+                var sla = new namespace.Sniffing.SettingsLayoutAdapter(
+                    namespace.tools.deepClone(options.settingsData.settings)
+                );
+                options.settingsData.settings = sla.getSettingsInNewLayout();
+
+                namespace.snifferController = new namespace.Sniffing.SnifferController(options);
+                namespace.snifferController.start();
+            }
+        }
+
+        function overrideFunctions() {
+            ITGS.overrideFunctions = {};
+            ITGS.overrideFunctions['SnifferUtilities.processPageURL'] = function(url) {return ITGS.Facades.URLProcessing.getURLPathOnly(url);};
+        }
+
+        // Functionality for diagnostics switching
+        var targetLoader = options.loader;
+        if ((window.ITGS_load_diagnostics === true) &&
+            (options.loaderWithDiag && (options.loaderWithDiag.length > 0))) {
+            targetLoader = options.loaderWithDiag;
+        }
+
+        var bakeCallback = function(loadScript) {
+            if (loadScript) {
+                // Cache invalid, load from remote
+                (function (scriptSrc) {
+                    if (typeof global.ITGS.mediaJsLoading !== "string") {
+                        global.ITGS.mediaJsLoading = "loading";
+                        var s = document.createElement('script');
+                        s.setAttribute('src', scriptSrc);
+                        s.setAttribute('async', 'async');
+                        s.setAttribute('type', 'text/javascript');
+                        document.getElementsByTagName('head')[0].appendChild(s);
+                    }
+                })(targetLoader);
+            }
+        };
+        global.ITGS.Bootstrap.setBakeCompletedCallback(function(usedBake) {
+            (bakeCallback)(!usedBake);
+        });
+
+        scriptLoadInterval = setInterval(initialise, 100);
+
+        if (window.ITGS_load_diagnostics === true) {
+            (bakeCallback)(true);
+        } else {
+            (function (scriptURL) {
+                var matches = scriptURL.match(/(mediakiosk|get-kiosk-script\?)(\d{1,})/),
+                    versionMatch = matches[2],
+                    setVersion = false;
+                try {
+                    var version = parseInt(versionMatch, 10);
+                    global.ITGS.Bootstrap.loadHandler.setCachedBakeVersion(version);
+                    setVersion = true;
+                } catch (e) {
+                    console.warn("(Kiosked) Failed storing version: ", e.message);
+                } finally {
+                    if (setVersion === true) {
+                        ITGS.Bootstrap.processBake();
+                    } else {
+                        // failed to set the version, so load the main library from remote
+                        console.log("(Kiosked) Loading library from remote");
+                        (bakeCallback)(true);
+                    }
+                }
+            })(options.loader);
+        }
+
+    })(window);
